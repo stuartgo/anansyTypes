@@ -1,0 +1,20 @@
+[project]
+name = "shared-types"
+version = "0.1.0"
+description = "Shared typing models for all services"
+authors = [
+    { name = "Your Team", email = "team@example.com" }
+]
+requires-python = ">=3.10"
+readme = "README.md"
+keywords = ["types", "schemas", "shared"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
