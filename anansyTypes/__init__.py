@@ -1,12 +1,15 @@
 from .enums import *
 from .schemas import *
-import structures
+from .structures import Embedding, Word, Symbol, Phrase
 
 
 __all__ = [
     "enums",
     "schemas",
-    "structures"
+    "Embedding",
+    "Word",
+    "Symbol",
+    "Phrase",
     "EmbedRequest",
     "EmbeddingResponse",
     "ResponseRequest",
