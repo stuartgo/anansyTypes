@@ -22,8 +22,10 @@ __all__ = [
     "GetWordResponse",
     "GetSimilarWordRequest",
     "GetAllPhrasesResponse",
+    "ModelType",
+    "PreprocessorType",
+    "SymbolProvider",
 ]
-
 
 
 
