@@ -48,6 +48,12 @@ class GetSimilarWordRequest(ModifiedBaseModel):
 class GetAllPhrasesResponse(ModifiedBaseModel):
     phrases: List[Phrase]
     
+class GetTranscriptionRequest(ModifiedBaseModel):
+    audio_data: bytes
+
+class GetTranscriptionResponse(ModifiedBaseModel):
+    transcription: str
+    
 
 
 
