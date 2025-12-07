@@ -1,5 +1,5 @@
 [project]
-name = "shared-types"
+name = "anansyTypes"
 version = "0.1.0"
 description = "Shared typing models for all services"
 authors = [
