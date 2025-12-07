@@ -8,3 +8,10 @@ class PreprocessorType(Enum):
     DEFAULT = "norwegian"
 class SymbolProvider(Enum):
     TOBII_DYNAVOX = "tobii_dynavox"
+
+
+class Language(Enum):
+    NORWEGIAN = "norwegian"
+    ENGLISH = "english"
+    DEFAULT = "norwegian"
+
