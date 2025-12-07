@@ -25,6 +25,7 @@ __all__ = [
     "ModelType",
     "PreprocessorType",
     "SymbolProvider",
+    "Language",
 ]
 
 
