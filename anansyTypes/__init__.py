@@ -1,6 +1,6 @@
 from .enums import *
 from .schemas import *
-from .structures import Embedding, Word, Symbol, Phrase
+import structures
 
 
 __all__ = [
