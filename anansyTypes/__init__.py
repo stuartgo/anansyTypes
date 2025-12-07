@@ -1,6 +1,6 @@
-import anansyTypes.anansyTypes.enums as enums
-import anansyTypes.anansyTypes.schemas as schemas
-from structures import Embedding, Word, Symbol, Phrase
+import enums
+import schemas
+import structures
 
 
 __all__ = [
