@@ -8,7 +8,7 @@ class ModifiedBaseModel(PydanticBaseModel):
 
 
 
-class EmbedRequest(ModifiedBaseModel):
+class EmbeddingRequest(ModifiedBaseModel):
     stemmed_words: List[str]
     tokens: dict
 class EmbeddingResponse(ModifiedBaseModel):
