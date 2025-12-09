@@ -1,11 +1,13 @@
 from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
-
-
+from pydantic_tensor import Tensor
+import torch
 @dataclass(frozen=True)
 class Embedding:
-    data: np.ndarray
+    data: Tensor[torch.Tensor]
+    
+    
 
     def __post_init__(self):
         if not isinstance(self.data, np.ndarray):
