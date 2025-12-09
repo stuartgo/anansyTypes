@@ -14,9 +14,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
+dependencies=[
+    "pydantic-tensor"
 
+]
 [build-system]
-requires = ["setuptools>=65.5.1", "wheel"]
+requires = ["setuptools>=65.5.1", "wheel" ]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
