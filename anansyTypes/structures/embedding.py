@@ -3,9 +3,10 @@ from dataclasses import dataclass
 import numpy as np
 from pydantic_tensor import Tensor
 import torch
+from typing import Any, Literal
 @dataclass(frozen=True)
 class Embedding:
-    data: Tensor[torch.Tensor]
+    data: Tensor[torch.Tensor | np.ndarray[Any, Any], Literal["int32", "int64"]]
     
     
 
