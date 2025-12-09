@@ -1,6 +1,6 @@
 from pydantic import BaseModel as PydanticBaseModel
 from typing import List, Any, Dict,Union
-from structures import Embedding,Word, Symbol,Phrase
+from .structures import Embedding,Word, Symbol,Phrase
 
 class ModifiedBaseModel(PydanticBaseModel):
     class Config:
