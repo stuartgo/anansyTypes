@@ -1,15 +1,15 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import torch
+import numpy as np
 
 
 @dataclass(frozen=True)
 class Embedding:
-    data: torch.Tensor
+    data: np.ndarray
 
     def __post_init__(self):
-        if not isinstance(self.data, torch.Tensor):
-            raise TypeError(f"data must be a torch.Tensor, got {type(self.data)}")
+        if not isinstance(self.data, np.ndarray):
+            raise TypeError(f"data must be a numpy.ndarray, got {type(self.data)}")
 
     def compare(self, other: Embedding) -> float:
         """

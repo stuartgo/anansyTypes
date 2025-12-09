@@ -20,3 +20,5 @@ class Lexeme(ABC):
         """Embedding(s) associated with the lexeme."""
         pass
     
+    
+    
