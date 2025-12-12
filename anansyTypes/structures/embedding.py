@@ -2,7 +2,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
 from pydantic_tensor import Tensor
-from pydantic_core import core_schema
 import torch
 from typing import Any, Literal
 

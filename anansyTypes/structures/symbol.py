@@ -14,17 +14,31 @@ class Symbol:
 
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        def serialize(value: "Symbol") -> dict:
-            serialized_image = handler(source_type=value.image.__class__, value=value.image)
-            return {
-                'id': value.id,
-                'label': value.label,
-                'image': serialized_image
-            }
-
-        return core_schema.json_or_python_schema(
-            python_schema=handler(cls),
-            json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, when_used='json'
+        from pydantic_core import core_schema
+        
+        return core_schema.no_info_after_validator_function(
+            cls,
+            core_schema.dataclass_schema(
+                cls=cls,
+                schema=core_schema.dataclass_args_schema(
+                    cls.__name__,
+                    [
+                        core_schema.dataclass_field(name='id', schema=handler.generate_schema(int)),
+                        core_schema.dataclass_field(name='label', schema=handler.generate_schema(str)),
+                        core_schema.dataclass_field(
+                            name='image',
+                            schema=handler.generate_schema(Tensor[np.ndarray[Any, Any], tuple, Literal["int32", "int64"]])
+                        ),
+                    ],
+                ),
+                fields=['id', 'label', 'image'],
+            ),
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                lambda x: {
+                    'id': x.id,
+                    'label': x.label,
+                    'image': x.image
+                },
+                when_used='json',
             ),
         )
