@@ -26,21 +26,23 @@ class Word(Lexeme):
     
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        def serialize(value: 'Word') -> dict:
-            serialized_embedding = handler(source_type=value.embedding.__class__, value=value.embedding)
-            
-            return {
-                'id': value.id,
-                'content': value.content, 
-                'embedding': serialized_embedding
-            }
-            
-        return core_schema.json_or_python_schema(
-            python_schema=core_schema.no_info_after_validator_function(
-                lambda x: x,
-                core_schema.is_instance_schema(cls)
+        from pydantic_core import core_schema
+        
+        return core_schema.no_info_after_validator_function(
+            lambda x: x if isinstance(x, cls) else cls(**x),
+            core_schema.typed_dict_schema(
+                {
+                    'id': core_schema.typed_dict_field(handler.generate_schema(int)),
+                    'content': core_schema.typed_dict_field(handler.generate_schema(str)),
+                    'embedding': core_schema.typed_dict_field(handler.generate_schema(Embedding)),
+                }
             ),
-            json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, when_used='json'
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                lambda x: {
+                    'id': x.id,
+                    'content': x.content,
+                    'embedding': x.embedding  # Let Pydantic serialize Embedding
+                },
+                when_used='json',
             ),
         )
