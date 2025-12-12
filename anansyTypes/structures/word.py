@@ -1,5 +1,5 @@
 from .lexeme import Lexeme
-from typing import  Any
+from typing import Any
 from .embedding import Embedding
 from pydantic_core import core_schema
 
@@ -17,32 +17,44 @@ class Word(Lexeme):
     @property
     def embedding(self) -> Embedding:
         return self._embedding
-    
+
     def __str__(self):
         return self.content
-    
+
     def __repr__(self):
         return self.__str__()
-    
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Word":
+        return cls(
+            word_id=data["id"],
+            content=data["content"],
+            embedding=Embedding.from_dict(data["embedding"]),
+        )
+
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
-        
+
         return core_schema.no_info_after_validator_function(
             lambda x: x if isinstance(x, cls) else cls(**x),
             core_schema.typed_dict_schema(
                 {
-                    'id': core_schema.typed_dict_field(handler.generate_schema(int)),
-                    'content': core_schema.typed_dict_field(handler.generate_schema(str)),
-                    'embedding': core_schema.typed_dict_field(handler.generate_schema(Embedding)),
+                    "id": core_schema.typed_dict_field(handler.generate_schema(int)),
+                    "content": core_schema.typed_dict_field(
+                        handler.generate_schema(str)
+                    ),
+                    "embedding": core_schema.typed_dict_field(
+                        handler.generate_schema(Embedding)
+                    ),
                 }
             ),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: {
-                    'id': x.id,
-                    'content': x.content,
-                    'embedding': x.embedding  # Let Pydantic serialize Embedding
+                    "id": x.id,
+                    "content": x.content,
+                    "embedding": x.embedding,  # Let Pydantic serialize Embedding
                 },
-                when_used='json',
+                when_used="json",
             ),
         )

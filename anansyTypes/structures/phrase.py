@@ -18,6 +18,14 @@ class Phrase(Lexeme):
     @property
     def embedding(self) -> Embedding:
         return self._embedding
+    
+    @classmethod
+    def from_dict(cls, data: dict) -> 'Phrase':
+        return cls(
+            id=data['id'],
+            content=data['content'],
+            embedding=Embedding.from_dict(data['embedding'])
+        )
 
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):

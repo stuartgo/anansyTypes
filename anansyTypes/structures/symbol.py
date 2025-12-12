@@ -13,6 +13,14 @@ class Symbol:
     image: Tensor[np.ndarray[Any, Any], tuple, Literal["int32", "int64"]]
 
     @classmethod
+    def from_dict(cls, data: dict) -> 'Symbol':
+        return cls(
+            id=data['id'],
+            label=data['label'],
+            image=np.array(data['image'], dtype=np.int32)
+        )
+
+    @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
         

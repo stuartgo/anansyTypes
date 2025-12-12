@@ -22,3 +22,7 @@ class Embedding:
         raise NotImplementedError(
             "Comparison must be implemented for all supported data types."
         )
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Embedding":
+        return cls(data=np.array(data["data"], dtype=np.float32))
