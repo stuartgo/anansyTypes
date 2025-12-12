@@ -3,6 +3,16 @@ class ModelType(Enum):
     EMBEDDING = "embedding"
     TRANSCRIPTION = "transcription"
     RESPONSE = "response"
+    
+class EmbeddingModelName(Enum):
+    NB_BERT = "nb_bert"
+
+class TranscriptionModelName(Enum):
+    WHISPER_SMALL = "whisper_small"
+
+class ResponseModelName(Enum):
+    GENERIC = "generic"  
+    
 class PreprocessorType(Enum):
     NORWEGIAN = "norwegian"
     DEFAULT = "norwegian"
