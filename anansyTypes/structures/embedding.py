@@ -33,7 +33,15 @@ class Embedding:
             }
 
         return core_schema.json_or_python_schema(
-            python_schema=handler(cls),
+            python_schema=core_schema.dataclass_schema(
+                schema=handler.generate_schema(cls), 
+                fields={
+                    'data': core_schema.model_field(
+                        schema=handler.generate_schema(cls.data),
+                        required=True
+                    ),
+                }
+            ),
             json_schema=core_schema.plain_serializer_function_ser_schema(
                 serialize, when_used='json'
             ),
