@@ -38,6 +38,6 @@ class Word(Lexeme):
         return core_schema.json_or_python_schema(
             python_schema=core_schema.is_instance_schema(cls),
             json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, return_type=dict, when_used='json'
+                serialize, when_used='json'
             ),
         )

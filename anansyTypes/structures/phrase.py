@@ -32,6 +32,6 @@ class Phrase(Lexeme):
             lambda x: x,
             core_schema.is_instance_schema(cls),
             serialization=core_schema.plain_serializer_function_ser_schema(
-                serialize, return_type=dict, when_used="json"
+                serialize, when_used="json"
             ),
         )
