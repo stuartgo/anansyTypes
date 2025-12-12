@@ -23,26 +23,3 @@ class Embedding:
         raise NotImplementedError(
             "Comparison must be implemented for all supported data types."
         )
-
-    @classmethod
-    def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        def serialize(value: "Embedding") -> dict:
-            serialized_data = handler(source_type=value.data.__class__, value=value.data)
-            return {
-                'data': serialized_data
-            }
-
-        return core_schema.json_or_python_schema(
-            python_schema=core_schema.dataclass_schema(
-                schema=handler.generate_schema(cls), 
-                fields={
-                    'data': core_schema.model_field(
-                        schema=handler.generate_schema(cls.data),
-                        required=True
-                    ),
-                }
-            ),
-            json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, when_used='json'
-            ),
-        )
