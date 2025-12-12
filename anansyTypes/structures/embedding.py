@@ -27,13 +27,14 @@ class Embedding:
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         def serialize(value: "Embedding") -> dict:
-            serialized_data = handler(source_type=value.data, value=value.data)
-
-            return {"data": serialized_data}
+            serialized_data = handler(source_type=value.data.__class__, value=value.data)
+            return {
+                'data': serialized_data
+            }
 
         return core_schema.json_or_python_schema(
-            python_schema=handler(cls),
+            python_schema=core_schema.dataclass_schema(cls),
             json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, when_used="json"
+                serialize, when_used='json'
             ),
         )

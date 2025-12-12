@@ -36,7 +36,10 @@ class Word(Lexeme):
             }
             
         return core_schema.json_or_python_schema(
-            python_schema=core_schema.is_instance_schema(cls),
+            python_schema=core_schema.no_info_after_validator_function(
+                lambda x: x,
+                core_schema.is_instance_schema(cls)
+            ),
             json_schema=core_schema.plain_serializer_function_ser_schema(
                 serialize, when_used='json'
             ),

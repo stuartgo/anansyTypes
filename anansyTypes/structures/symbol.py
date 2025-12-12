@@ -15,15 +15,16 @@ class Symbol:
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         def serialize(value: "Symbol") -> dict:
-            serialized_image = handler(
-                source_type=value.image.__class__, value=value.image
-            )
-
-            return {"id": value.id, "label": value.label, "image": serialized_image}
+            serialized_image = handler(source_type=value.image.__class__, value=value.image)
+            return {
+                'id': value.id,
+                'label': value.label,
+                'image': serialized_image
+            }
 
         return core_schema.json_or_python_schema(
-            python_schema=handler(cls),
+            python_schema=core_schema.dataclass_schema(cls),
             json_schema=core_schema.plain_serializer_function_ser_schema(
-                serialize, when_used="json"
+                serialize, when_used='json'
             ),
         )
