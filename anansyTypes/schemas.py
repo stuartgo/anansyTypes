@@ -2,7 +2,9 @@ from pydantic import BaseModel as PydanticBaseModel
 from typing import List, Any, Dict,Union
 from .structures import Embedding,Word, Symbol,Phrase
 from pydantic import field_validator, ConfigDict
-
+from pydantic_tensor import Tensor
+import torch
+from typing import Any, Literal
 class ModifiedBaseModel(PydanticBaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     
@@ -34,7 +36,7 @@ class EmbeddingRequest(ModifiedBaseModel):
     word_ids: List[int]
 
 class EmbeddingResponse(ModifiedBaseModel):
-    embeddings: List[dict]
+    embeddings: Tensor[torch.Tensor, tuple, Literal["int32", "int64"]]
 
 class ResponseRequest(ModifiedBaseModel):
     text: str
