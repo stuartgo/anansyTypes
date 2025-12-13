@@ -40,7 +40,7 @@ class Symbol:
                 return cls.from_dict(value)
             raise ValueError(f"Cannot convert {type(value)} to Symbol")
 
-        return core_schema.with_info_plain_validator_function(
+        python_schema = core_schema.with_info_plain_validator_function(
             lambda value, _: validate_symbol(value),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: {
@@ -52,4 +52,15 @@ class Symbol:
                 },
                 when_used="json",
             ),
+        )
+
+        return core_schema.json_or_python_schema(
+            json_schema=core_schema.typed_dict_schema(
+                {
+                    "id": core_schema.typed_dict_field(core_schema.int_schema()),
+                    "label": core_schema.typed_dict_field(core_schema.str_schema()),
+                    "image": core_schema.typed_dict_field(core_schema.str_schema()),
+                }
+            ),
+            python_schema=python_schema,
         )
