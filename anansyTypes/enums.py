@@ -1,3 +1,4 @@
+import anansyTypes
 from enum import Enum
 from typing import Union
 
@@ -8,19 +9,20 @@ class ModelType(Enum):
     RESPONSE = "response"
 
 
-class EmbeddingModelName(Enum):
+class ModelName(Enum):
+    pass
+
+
+class EmbeddingModelName(ModelName):
     NB_BERT = "nb_bert"
 
 
-class TranscriptionModelName(Enum):
+class TranscriptionModelName(ModelName):
     NB_WHISPER_SMALL = "nb_whisper_small"
 
 
-class ResponseModelName(Enum):
+class ResponseModelName(ModelName):
     GENERIC = "generic"
-
-
-ModelName= Union[EmbeddingModelName, TranscriptionModelName, ResponseModelName]
 
 
 class PreprocessorType(Enum):
