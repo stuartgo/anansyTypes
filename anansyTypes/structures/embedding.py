@@ -26,3 +26,16 @@ class Embedding:
     @classmethod
     def from_dict(cls, data: dict) -> "Embedding":
         return cls(data=np.array(data["data"], dtype=np.float32))
+    
+    @classmethod
+    def __get_pydantic_core_schema__(cls, source_type: Any, handler):
+        from pydantic_core import core_schema
+        
+        return core_schema.with_info_plain_validator_function(
+            lambda value, _: cls.from_dict(value) if isinstance(value, dict) else value,
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                lambda x: {"data": x.data.tolist()},
+                when_used="json",
+            ),
+        )
+
