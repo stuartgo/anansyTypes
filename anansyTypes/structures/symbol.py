@@ -33,33 +33,15 @@ class Symbol:
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
 
-        return core_schema.no_info_after_validator_function(
-            cls,
-            core_schema.dataclass_schema(
-                cls=cls,
-                schema=core_schema.dataclass_args_schema(
-                    cls.__name__,
-                    [
-                        core_schema.dataclass_field(
-                            name="id", schema=handler.generate_schema(int)
-                        ),
-                        core_schema.dataclass_field(
-                            name="label", schema=handler.generate_schema(str)
-                        ),
-                        core_schema.dataclass_field(
-                            name="image",
-                            schema=handler.generate_schema(
-                                Tensor[
-                                    np.ndarray[Any, Any],
-                                    tuple,
-                                    Literal["int32", "int64"],
-                                ]
-                            ),
-                        ),
-                    ],
-                ),
-                fields=["id", "label", "image"],
-            ),
+        def validate_symbol(value):
+            if isinstance(value, cls):
+                return value
+            if isinstance(value, dict):
+                return cls.from_dict(value)
+            raise ValueError(f"Cannot convert {type(value)} to Symbol")
+
+        return core_schema.with_info_plain_validator_function(
+            lambda value, _: validate_symbol(value),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: {
                     "id": x.id,
