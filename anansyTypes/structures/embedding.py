@@ -25,4 +25,4 @@ class Embedding:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Embedding":
-        return cls(data=np.array(data["data"], dtype=np.float32))
+        return cls(data=torch.tensor(data["data"], dtype=torch.float32))
