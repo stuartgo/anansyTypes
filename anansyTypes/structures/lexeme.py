@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Union
+from typing import List, Union, Any
 from dataclasses import dataclass
 from .embedding import Embedding
 
