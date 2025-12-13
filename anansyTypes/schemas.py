@@ -31,6 +31,7 @@ class ModifiedBaseModel(PydanticBaseModel):
 class EmbeddingRequest(ModifiedBaseModel):
     stemmed_words: List[str]
     tokens: dict
+    token_ids: List[int]
 
 class EmbeddingResponse(ModifiedBaseModel):
     embeddings: List[dict]
