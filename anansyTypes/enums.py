@@ -8,7 +8,7 @@ class EmbeddingModelName(Enum):
     NB_BERT = "nb_bert"
 
 class TranscriptionModelName(Enum):
-    WHISPER_SMALL = "whisper_small"
+    NB_WHISPER_SMALL = "nb_whisper_small"
 
 class ResponseModelName(Enum):
     GENERIC = "generic"  
