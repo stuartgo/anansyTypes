@@ -50,7 +50,7 @@ class GetSymbolRequest(ModifiedBaseModel):
     lexeme_id: int
 
 class GetSymbolResponse(ModifiedBaseModel):
-    symbol: Union[dict, None]
+    symbol: Union[Symbol, None]
 
 class GetWordRequest(ModifiedBaseModel):
     word_text: str
