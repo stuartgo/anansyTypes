@@ -36,7 +36,7 @@ class EmbeddingRequest(ModifiedBaseModel):
     word_ids: List[int]
 
 class EmbeddingResponse(ModifiedBaseModel):
-    embeddings: List[Embedding]
+    embeddings: List[dict]
 
 class ResponseRequest(ModifiedBaseModel):
     text: str
