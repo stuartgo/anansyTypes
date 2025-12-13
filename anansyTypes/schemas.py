@@ -45,6 +45,7 @@ class PreprocessRequest(ModifiedBaseModel):
 class PreprocessResponse(ModifiedBaseModel):
     raw_words: List[str]
     tokens: Dict[str, Any]
+    word_ids: List[int]
 
 class GetSymbolRequest(ModifiedBaseModel):
     lexeme_id: int
