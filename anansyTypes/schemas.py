@@ -21,12 +21,6 @@ class ModifiedBaseModel(PydanticBaseModel):
                 'content': v.content,
                 'embedding': {'data': v.embedding.data.tolist()}
             }
-        if isinstance(v, Symbol):
-            return {
-                'id': v.id,
-                'label': v.label,
-                'image': v.image.tolist() if hasattr(v.image, 'tolist') else v.image
-            }
         if isinstance(v, Embedding):
             return {'data': v.data.tolist()}
         if isinstance(v, list):
@@ -56,7 +50,7 @@ class GetSymbolRequest(ModifiedBaseModel):
     lexeme_id: int
 
 class GetSymbolResponse(ModifiedBaseModel):
-    symbol: dict
+    symbol: Union[dict, None]
 
 class GetWordRequest(ModifiedBaseModel):
     word_text: str
