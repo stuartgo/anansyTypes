@@ -36,24 +36,20 @@ class Word(Lexeme):
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
 
-        return core_schema.no_info_after_validator_function(
-            lambda x: x if isinstance(x, cls) else cls(**x),
-            core_schema.typed_dict_schema(
-                {
-                    "id": core_schema.typed_dict_field(handler.generate_schema(int)),
-                    "content": core_schema.typed_dict_field(
-                        handler.generate_schema(str)
-                    ),
-                    "embedding": core_schema.typed_dict_field(
-                        handler.generate_schema(Embedding)
-                    ),
-                }
-            ),
+        def validate_word(value):
+            if isinstance(value, cls):
+                return value
+            if isinstance(value, dict):
+                return cls.from_dict(value)
+            raise ValueError(f"Cannot convert {type(value)} to Word")
+
+        return core_schema.with_info_plain_validator_function(
+            lambda value, _: validate_word(value),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: {
                     "id": x.id,
                     "content": x.content,
-                    "embedding": x.embedding,  # Let Pydantic serialize Embedding
+                    "embedding": {"data": x.embedding.data.tolist()},
                 },
                 when_used="json",
             ),
