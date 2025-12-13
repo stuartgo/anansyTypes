@@ -26,26 +26,3 @@ class Phrase(Lexeme):
             content=data["content"],
             embedding=Embedding.from_dict(data["embedding"]),
         )
-
-    @classmethod
-    def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        from pydantic_core import core_schema
-
-        def validate_phrase(value):
-            if isinstance(value, cls):
-                return value
-            if isinstance(value, dict):
-                return cls.from_dict(value)
-            raise ValueError(f"Cannot convert {type(value)} to Phrase")
-
-        return core_schema.with_info_plain_validator_function(
-            lambda value, _: validate_phrase(value),
-            serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda x: {
-                    "id": x.id,
-                    "content": x.content,
-                    "embedding": {"data": x.embedding.data.tolist()},
-                },
-                when_used="json",
-            ),
-        )

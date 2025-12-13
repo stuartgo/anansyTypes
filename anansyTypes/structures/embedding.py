@@ -30,18 +30,26 @@ class Embedding:
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
-
+        
         def validate_embedding(value):
             if isinstance(value, cls):
                 return value
             if isinstance(value, dict):
                 return cls.from_dict(value)
             raise ValueError(f"Cannot convert {type(value)} to Embedding")
-
-        return core_schema.with_info_plain_validator_function(
+        
+        python_schema = core_schema.with_info_plain_validator_function(
             lambda value, _: validate_embedding(value),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: {"data": x.data.tolist()},
                 when_used="json",
             ),
         )
+        
+        return core_schema.json_or_python_schema(
+            json_schema=core_schema.typed_dict_schema({
+                'data': core_schema.typed_dict_field(core_schema.list_schema())
+            }),
+            python_schema=python_schema,
+        )
+
