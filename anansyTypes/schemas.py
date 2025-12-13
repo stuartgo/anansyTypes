@@ -36,7 +36,7 @@ class EmbeddingRequest(ModifiedBaseModel):
     word_ids: List[int]
 
 class EmbeddingResponse(ModifiedBaseModel):
-    embeddings: Tensor[torch.Tensor, tuple, Literal["int32", "int64"]]
+    embeddings: Tensor[torch.Tensor, tuple, Literal["float32", "float64"]]
 
 class ResponseRequest(ModifiedBaseModel):
     text: str
