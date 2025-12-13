@@ -64,7 +64,7 @@ class GetWordResponse(ModifiedBaseModel):
     word: Union[dict, None]
 
 class GetSimilarWordRequest(ModifiedBaseModel):
-    embedding: Tensor[torch.Tensor, tuple, Literal["float32", "float64"]]
+    embedding: dict
 
 class GetAllPhrasesResponse(ModifiedBaseModel):
     phrases: List[dict]
