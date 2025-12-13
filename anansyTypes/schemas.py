@@ -25,7 +25,7 @@ class ModifiedBaseModel(PydanticBaseModel):
             return {
                 'id': v.id,
                 'label': v.label,
-                'image': v.image.tolist()
+                'image': v.image.tolist() if hasattr(v.image, 'tolist') else v.image
             }
         if isinstance(v, Embedding):
             return {'data': v.data.tolist()}
