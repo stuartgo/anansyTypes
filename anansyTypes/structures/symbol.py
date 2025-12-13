@@ -45,8 +45,8 @@ class Symbol:
                 lambda x: {
                     'id': x.id,
                     'label': x.label,
-                    'image': x.image
+                    'image': x.image.tolist() if hasattr(x.image, 'tolist') else list(x.image)
                 },
                 when_used='json',
-            ),
+            )
         )
