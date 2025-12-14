@@ -18,7 +18,7 @@ class Symbol:
         if isinstance(data["image"], str):
             # Decode from base64
             image_bytes = base64.b64decode(data["image"])
-            image_array = np.frombuffer(image_bytes, dtype=np.int32)
+            image_array = np.frombuffer(image_bytes, dtype=np.uint8)
         else:
             # From list/array
             image_array = np.array(data["image"], dtype=np.int32)
