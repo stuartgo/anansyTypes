@@ -31,7 +31,7 @@ class NoEmbeddingPhrase(Lexeme):
     def __init__(self, id: int, content: str):
         self.id = id
         self._content = content
-        self.embedding=np.array([])  # Placeholder to avoid attribute errors
+        self._embedding=np.array([])  # Placeholder to avoid attribute errors
     @property
     def content(self) -> str:
         return self._content
