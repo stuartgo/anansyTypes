@@ -1,6 +1,8 @@
 from pydantic import BaseModel as PydanticBaseModel
 from typing import List, Any, Dict, Optional,Union
-from .structures import Embedding,Word, Symbol,Phrase
+
+
+from .structures import Embedding,Word, Symbol,Phrase,NoEmbeddingPhrase
 from pydantic import field_validator, ConfigDict
 from pydantic_tensor import Tensor
 import torch
@@ -47,7 +49,7 @@ class GetSimilarWordRequest(ModifiedBaseModel):
     embedding: Embedding
 
 class GetAllPhrasesResponse(ModifiedBaseModel):
-    phrases: List[Phrase]
+    phrases: List[NoEmbeddingPhrase]
 
 class GetTranscriptionRequest(ModifiedBaseModel):
     audio_data: bytes
