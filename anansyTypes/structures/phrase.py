@@ -3,21 +3,21 @@ from pydantic_core import core_schema
 
 from .lexeme import Lexeme
 from .embedding import Embedding
-
+import numpy as np
 
 class Phrase(Lexeme):
     def __init__(self, id: int, content: str, embedding: Embedding):
         self.id = id
-        self._content = content
-        self._embedding = embedding
+        self.content = content
+        self.embedding = embedding
 
     @property
     def content(self) -> str:
-        return self._content
+        return self.content
 
     @property
     def embedding(self) -> Embedding:
-        return self._embedding
+        return self.embedding
 
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
@@ -28,15 +28,14 @@ class Phrase(Lexeme):
         )
         
         
-class NoEmbeddingPhrase():
+class NoEmbeddingPhrase(Lexeme):
     def __init__(self, id: int, content: str):
         self.id = id
-        self._content = content
-
+        self.content = content
+        self.embedding=np.array([])  # Placeholder to avoid attribute errors
     @property
     def content(self) -> str:
-        return self._content
-
+        return self.content
 
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
