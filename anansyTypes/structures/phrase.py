@@ -26,23 +26,3 @@ class Phrase(Lexeme):
             embedding=Embedding.from_dict(data["embedding"]),
         )
         
-        
-class NoEmbeddingPhrase(Lexeme):
-    def __init__(self, id: int, content: str):
-        self.id = id
-        self._content = content
-        self._embedding=np.array([])  # Placeholder to avoid attribute errors
-    @property
-    def content(self) -> str:
-        return self._content
-    
-    @property
-    def embedding(self) -> Embedding:
-        return self._embedding
-    
-    @classmethod
-    def from_dict(cls, data: dict) -> "Phrase":
-        return cls(
-            id=data["id"],
-            content=data["content"]
-        )
