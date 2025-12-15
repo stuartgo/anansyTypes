@@ -1,6 +1,6 @@
 from .enums import *
 from .schemas import *
-from .structures import Embedding, Word, Symbol, Phrase,Lexeme
+from .structures import Embedding, Word, Symbol, Phrase,Lexeme,NoEmbeddingPhrase
 
 
 __all__ = [
@@ -11,6 +11,7 @@ __all__ = [
     "Symbol",
     "Phrase",
     "Lexeme",
+    "NoEmbeddingPhrase",
     "EmbedRequest",
     "EmbeddingResponse",
     "ResponseRequest",
