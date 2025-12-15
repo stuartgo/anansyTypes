@@ -8,17 +8,16 @@ import numpy as np
 class Phrase(Lexeme):
     def __init__(self, id: int, content: str, embedding: Embedding):
         self.id = id
-        self.content = content
-        self.embedding = embedding
+        self._content = content
+        self._embedding = embedding
 
     @property
     def content(self) -> str:
-        return self.content
+        return self._content
 
     @property
     def embedding(self) -> Embedding:
-        return self.embedding
-
+        return self._embedding
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
         return cls(
@@ -31,12 +30,11 @@ class Phrase(Lexeme):
 class NoEmbeddingPhrase(Lexeme):
     def __init__(self, id: int, content: str):
         self.id = id
-        self.content = content
+        self._content = content
         self.embedding=np.array([])  # Placeholder to avoid attribute errors
     @property
     def content(self) -> str:
-        return self.content
-
+        return self._content
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
         return cls(
