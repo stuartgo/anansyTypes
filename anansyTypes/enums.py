@@ -38,3 +38,8 @@ class Language(Enum):
     NORWEGIAN = "norwegian"
     ENGLISH = "english"
     DEFAULT = "norwegian"
+
+
+class ResourceType(Enum):
+    WORD = "word"
+    SYMBOL = "symbol"
