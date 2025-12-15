@@ -50,6 +50,12 @@ class GetSimilarWordRequest(ModifiedBaseModel):
 
 class GetAllPhrasesResponse(ModifiedBaseModel):
     phrases: List[NoEmbeddingPhrase]
+    
+class GetFullPhrasesRequest(ModifiedBaseModel):
+    phrases: List[NoEmbeddingPhrase]
+
+class GetFullPhrasesResponse(ModifiedBaseModel):
+    phrases: List[Phrase]
 
 class GetTranscriptionRequest(ModifiedBaseModel):
     audio_data: bytes
