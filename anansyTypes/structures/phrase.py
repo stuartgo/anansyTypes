@@ -35,6 +35,11 @@ class NoEmbeddingPhrase(Lexeme):
     @property
     def content(self) -> str:
         return self._content
+    
+    @property
+    def embedding(self) -> Embedding:
+        return self._embedding
+    
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
         return cls(

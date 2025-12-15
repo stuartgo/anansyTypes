@@ -15,9 +15,10 @@ class Lexeme(ABC):
         pass
 
     @property
+    @abstractmethod
     def embedding(self) -> Embedding:
         """Embedding(s) associated with the lexeme."""
-        raise NotImplementedError("Embeddings are not supported") #added to allow for NoEmbeddingPhrase
+        pass
 
     @classmethod
     @abstractmethod
