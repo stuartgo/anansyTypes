@@ -5,6 +5,26 @@ from .lexeme import Lexeme
 from .embedding import Embedding
 import numpy as np
 
+
+class NoEmbeddingPhrase(Lexeme):
+    def __init__(self, id: int, content: str):
+        self.id = id
+        self._content = content
+        self._embedding = np.array([])  # Placeholder to avoid attribute errors
+
+    @property
+    def content(self) -> str:
+        return self._content
+
+    @property
+    def embedding(self) -> Embedding:
+        return self._embedding
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "NoEmbeddingPhrase":
+        return cls(id=data["id"], content=data["content"])
+
+
 class Phrase(Lexeme):
     def __init__(self, id: int, content: str, embedding: Embedding):
         self.id = id
@@ -18,6 +38,7 @@ class Phrase(Lexeme):
     @property
     def embedding(self) -> Embedding:
         return self._embedding
+
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
         return cls(
@@ -25,24 +46,13 @@ class Phrase(Lexeme):
             content=data["content"],
             embedding=Embedding.from_dict(data["embedding"]),
         )
-        
-        
-class NoEmbeddingPhrase(Lexeme):
-    def __init__(self, id: int, content: str):
-        self.id = id
-        self._content = content
-        self._embedding=np.array([])  # Placeholder to avoid attribute errors
-    @property
-    def content(self) -> str:
-        return self._content
-    
-    @property
-    def embedding(self) -> Embedding:
-        return self._embedding
-    
+
     @classmethod
-    def from_dict(cls, data: dict) -> "NoEmbeddingPhrase":
+    def from_noembeddingphrase(
+        cls, phrase: NoEmbeddingPhrase, embedding: Embedding
+    ) -> "Phrase":
         return cls(
-            id=data["id"],
-            content=data["content"]
+            id=phrase.id,
+            content=phrase.content,
+            embedding=embedding,
         )
