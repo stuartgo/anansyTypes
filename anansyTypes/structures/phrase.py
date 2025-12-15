@@ -28,7 +28,7 @@ class Phrase(Lexeme):
         )
         
         
-class NoEmbeddingPhrase(Lexeme):
+class NoEmbeddingPhrase():
     def __init__(self, id: int, content: str):
         self.id = id
         self._content = content
