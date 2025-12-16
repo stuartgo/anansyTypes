@@ -64,7 +64,7 @@ class GetTranscriptionResponse(ModifiedBaseModel):
     transcription: str
 
 class AudioToSymbolRequest(ModifiedBaseModel):
-    audio_data: bytes
+    audio_data: str
 
 class AudioToSymbolResponse(ModifiedBaseModel):
     symbols: List[Symbol]
