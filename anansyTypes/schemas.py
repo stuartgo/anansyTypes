@@ -49,13 +49,13 @@ class GetSimilarWordRequest(ModifiedBaseModel):
     embedding: Embedding
 
 class GetAllPhrasesResponse(ModifiedBaseModel):
-    phrases: List[NoEmbeddingPhrase]
+    phrases: Optional[List[NoEmbeddingPhrase]]
     
 class GetFullPhrasesRequest(ModifiedBaseModel):
     phrases: List[NoEmbeddingPhrase]
 
 class GetFullPhrasesResponse(ModifiedBaseModel):
-    phrases: List[Phrase]
+    phrases: Optional[List[Phrase]]
 
 class GetTranscriptionRequest(ModifiedBaseModel):
     audio_data: bytes
