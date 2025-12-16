@@ -58,7 +58,7 @@ class GetFullPhrasesResponse(ModifiedBaseModel):
     phrases: Optional[List[Phrase]]
 
 class GetTranscriptionRequest(ModifiedBaseModel):
-    audio_data: bytes
+    audio_data: str
 
 class GetTranscriptionResponse(ModifiedBaseModel):
     transcription: str
