@@ -63,6 +63,11 @@ class GetTranscriptionRequest(ModifiedBaseModel):
 class GetTranscriptionResponse(ModifiedBaseModel):
     transcription: str
 
+class AudioToSymbolRequest(ModifiedBaseModel):
+    audio_data: bytes
+
+class AudioToSymbolResponse(ModifiedBaseModel):
+    symbols: List[Symbol]
 
 
 
