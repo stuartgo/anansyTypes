@@ -15,18 +15,18 @@ class Symbol:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Symbol":
-        if isinstance(data["image"], str):
-            # Decode from base64
-            image_bytes = base64.b64decode(data["image"])
-            image_array = np.frombuffer(image_bytes, dtype=np.uint8)
-        else:
-            # From list/array
-            image_array = np.array(data["image"], dtype=np.int32)
-
+        # if isinstance(data["image"], str):
+        #     # Decode from base64
+        #     image_bytes = base64.b64decode(data["image"])
+        #     image_array = np.frombuffer(image_bytes, dtype=np.uint8)
+        # else:
+        #     # From list/array
+        #     image_array = np.array(data["image"], dtype=np.int32)
+        image_data=data["image"].encode("utf-8")
         return cls(
             id=data["id"],
             label=data["label"],
-            image=image_array,
+            image=image_data,
         )
 
     @classmethod
@@ -46,9 +46,7 @@ class Symbol:
                 lambda x: {
                     "id": x.id,
                     "label": x.label,
-                    "image": base64.b64encode(np.array(x.image).tobytes()).decode(
-                        "utf-8"
-                    ),
+                    "image": x.image.decode("utf-8"),
                 },
                 when_used="json",
             ),
