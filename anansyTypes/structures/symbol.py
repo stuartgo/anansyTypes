@@ -11,22 +11,21 @@ import base64
 class Symbol:
     id: int
     label: str
-    image: Tensor[np.ndarray[Any, Any], tuple, Literal["int32", "int64"]]
+    image: np.ndarray 
 
     @classmethod
     def from_dict(cls, data: dict) -> "Symbol":
-        # if isinstance(data["image"], str):
-        #     # Decode from base64
-        #     image_bytes = base64.b64decode(data["image"])
-        #     image_array = np.frombuffer(image_bytes, dtype=np.uint8)
-        # else:
-        #     # From list/array
-        #     image_array = np.array(data["image"], dtype=np.int32)
-        image_data=data["image"].encode("utf-8")
+        if isinstance(data["image"], str):
+            # Decode base64 to numpy array
+            image_bytes = base64.b64decode(data["image"])
+            image_array = np.frombuffer(image_bytes, dtype=np.uint8)
+        else:
+            image_array = np.array(data["image"], dtype=np.uint8)
+        
         return cls(
             id=data["id"],
             label=data["label"],
-            image=image_data,
+            image=image_array,
         )
 
     @classmethod
@@ -46,7 +45,7 @@ class Symbol:
                 lambda x: {
                     "id": x.id,
                     "label": x.label,
-                    "image": x.image.decode("utf-8"),
+                    "image": base64.b64encode(x.image.tobytes()).decode("utf-8"),
                 },
                 when_used="json",
             ),
