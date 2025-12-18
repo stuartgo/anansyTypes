@@ -45,7 +45,7 @@ class Symbol:
                 lambda x: {
                     "id": x.id,
                     "label": x.label,
-                    "image": base64.b64encode(x.image.tobytes()).decode("utf-8"),
+                    "image": base64.b64encode(x.image).decode("utf-8"),
                 },
                 when_used="json",
             ),
