@@ -11,21 +11,19 @@ import base64
 class Symbol:
     id: int
     label: str
-    image: np.ndarray 
+    image: bytes
 
     @classmethod
     def from_dict(cls, data: dict) -> "Symbol":
         if isinstance(data["image"], str):
-            # Decode base64 to numpy array
             image_bytes = base64.b64decode(data["image"])
-            image_array = np.frombuffer(image_bytes, dtype=np.uint8)
         else:
-            image_array = np.array(data["image"], dtype=np.uint8)
+            image_bytes = bytes(data["image"])
         
         return cls(
             id=data["id"],
             label=data["label"],
-            image=image_array,
+            image=image_bytes,
         )
 
     @classmethod
