@@ -10,6 +10,7 @@ class NoEmbeddingPhrase(Lexeme):
     def __init__(self, id: int, content: str):
         self.id = id
         self._content = content
+        self._original_content = content
         self._embedding = np.array([])  # Placeholder to avoid attribute errors
 
     @property
@@ -34,6 +35,7 @@ class Phrase(Lexeme):
     def __init__(self, id: int, content: str, embedding: Embedding):
         self.id = id
         self._content = content
+        self._original_content = content
         self._embedding = embedding
 
     @property
