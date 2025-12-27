@@ -15,6 +15,11 @@ class NoEmbeddingPhrase(Lexeme):
     @property
     def content(self) -> str:
         return self._content
+    
+    @property
+    def original_content(self) -> str:
+        #temporarily return content as original_content
+        return self._content
 
     @property
     def embedding(self) -> Embedding:

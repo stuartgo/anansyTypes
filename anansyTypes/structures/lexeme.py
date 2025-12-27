@@ -13,6 +13,12 @@ class Lexeme(ABC):
     def content(self) -> Union[str, List[str]]:
         """Text content of the lexeme."""
         pass
+    
+    @property
+    @abstractmethod
+    def original_content(self) -> Union[str, List[str]]:
+        """Original text content of the lexeme."""
+        pass
 
     @property
     @abstractmethod
@@ -43,6 +49,7 @@ class Lexeme(ABC):
                 lambda x: {
                     "id": x.id,
                     "content": x.content,
+                    "original_content": x.original_content,
                     "embedding": {"data": x.embedding.data.tolist()},
                 },
                 when_used="json",
@@ -53,6 +60,7 @@ class Lexeme(ABC):
             json_schema=core_schema.typed_dict_schema(
                 {
                     "id": core_schema.typed_dict_field(core_schema.int_schema()),
+                    "original_content": core_schema.typed_dict_field(core_schema.str_schema()),
                     "content": core_schema.typed_dict_field(core_schema.str_schema()),
                     "embedding": core_schema.typed_dict_field(
                         handler.generate_schema(Embedding)
