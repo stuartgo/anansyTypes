@@ -68,6 +68,7 @@ class AudioToSymbolRequest(ModifiedBaseModel):
 
 class AudioToSymbolResponse(ModifiedBaseModel):
     symbols: List[Symbol]
+    sentence: str
 
 
 
