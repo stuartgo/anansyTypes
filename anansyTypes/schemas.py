@@ -29,6 +29,7 @@ class PreprocessRequest(ModifiedBaseModel):
 
 class PreprocessResponse(ModifiedBaseModel):
     raw_words: List[str]
+    stemmed_words: List[str]
     tokens: Dict[str, Any]
     word_ids: List[int]
 
