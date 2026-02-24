@@ -43,3 +43,12 @@ class Language(Enum):
 class ResourceType(Enum):
     WORD = "word"
     SYMBOL = "symbol"
+
+class SubscriptionType(Enum):
+    FREE = "free"
+    PAID = "paid"
+    
+class Currency(Enum):
+    EUR = "EUR"
+    USD = "USD"
+    NOK = "NOK"
