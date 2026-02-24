@@ -8,7 +8,7 @@ from typing import Any, Literal
 
 @dataclass(frozen=True)
 class Embedding:
-    data: Tensor[torch.Tensor | np.ndarray[Any, Any], tuple, Literal["int32", "int64"]]
+    data: Tensor[torch.Tensor | np.ndarray[Any], tuple, Literal["int64"]]
 
     def compare(self, other: Embedding) -> float:
         """
