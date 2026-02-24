@@ -1,55 +1,31 @@
-from __future__ import annotations
-from dataclasses import dataclass
-import numpy as np
-from pydantic_tensor import Tensor
+from typing import Any
 import torch
-from typing import Any, Literal
+from pydantic import BaseModel
+from pydantic_core import core_schema
+from typing_extensions import Annotated
 
 
-@dataclass(frozen=True)
-class Embedding:
-    data: Tensor[torch.Tensor | np.ndarray[Any, Any], tuple, Literal["int32", "int64"]]
-
-    def compare(self, other: Embedding) -> float:
-        """
-        Compare this embedding with another embedding.
-        """
-        if isinstance(self.data, np.ndarray) and isinstance(other.data, np.ndarray):
-            # Simple example: L2 distance (Euclidean distance)
-            return np.linalg.norm(self.data - other.data)
-
-        # Fallback or error if not implemented for other types (e.g., torch.Tensor)
-        raise NotImplementedError(
-            "Comparison must be implemented for all supported data types."
-        )
-
+class TensorPydantic:
     @classmethod
-    def from_dict(cls, data: dict) -> "Embedding":
-        return cls(data=np.array(data["data"], dtype=np.float32))
+    def __get_pydantic_core_schema__(cls, source, handler):
+        def validate(v: Any):
+            if isinstance(v, torch.Tensor):
+                return v
+            if isinstance(v, list):
+                return torch.tensor(v, dtype=torch.float32)
+            raise TypeError(f"Cannot convert {type(v)} to torch.Tensor")
 
-    @classmethod
-    def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        from pydantic_core import core_schema
-        
-        def validate_embedding(value):
-            if isinstance(value, cls):
-                return value
-            if isinstance(value, dict):
-                return cls.from_dict(value)
-            raise ValueError(f"Cannot convert {type(value)} to Embedding")
-        
-        python_schema = core_schema.with_info_plain_validator_function(
-            lambda value, _: validate_embedding(value),
+        return core_schema.json_or_python_schema(
+            json_schema=core_schema.list_schema(core_schema.any_schema()),
+            python_schema=core_schema.no_info_plain_validator_function(validate),
             serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda x: {"data": x.data.tolist()},
-                when_used="json",
+                lambda t: t.detach().cpu().tolist()
             ),
         )
-        
-        return core_schema.json_or_python_schema(
-            json_schema=core_schema.typed_dict_schema({
-                'data': core_schema.typed_dict_field(core_schema.list_schema())
-            }),
-            python_schema=python_schema,
-        )
 
+
+Tensor = Annotated[torch.Tensor, TensorPydantic]
+
+
+class Embedding(BaseModel):
+    data: Tensor
