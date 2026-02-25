@@ -30,3 +30,8 @@ Tensor = Annotated[torch.Tensor, TensorPydantic]
 class Embedding(BaseModel):
     data: Tensor
     
+    @classmethod
+    def from_dict(cls, data: dict) -> "Embedding":
+        return cls(data=torch.tensor(data["data"], dtype=torch.float32))
+    
+    
