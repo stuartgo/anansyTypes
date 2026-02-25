@@ -8,9 +8,9 @@ import numpy as np
 
 
 class NoEmbeddingPhrase(Lexeme):
-    def __init__(self, id: str, content: str,original_content: str):
+    def __init__(self, id: str, content: str):
         #initialised with empty embedding
-        super().__init__(id=id, content=content, embedding=Embedding(data=torch.tensor([])), original_content=original_content)
+        super().__init__(id=id, content=content, embedding=Embedding(data=torch.tensor([])), original_content=content)
 
 
 class Phrase(Lexeme):
