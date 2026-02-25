@@ -17,7 +17,7 @@ class Lexeme(BaseModel,ABC):
         return cls(
             id=data["id"],
             content=data["content"],
-            embedding=Embedding.from_dict(data["embedding"]),
+            embedding=Embedding(data["embedding"]),
             original_content=data["original_content"],
         )
     def __new__(cls, *args, **kwargs):
