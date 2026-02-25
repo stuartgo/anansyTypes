@@ -19,7 +19,7 @@ class Lexeme(BaseModel,ABC):
             content=data["content"],
             embedding=Embedding.from_dict(data["embedding"]),
             original_content=data["original_content"],
-        )
+        ) 
     def __new__(cls, *args, **kwargs):
         if cls is Lexeme:
             raise TypeError("Lexeme cannot be instantiated, use a subclass instead")
