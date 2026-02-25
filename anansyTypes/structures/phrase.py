@@ -1,5 +1,6 @@
 from typing import List, Any
 from pydantic_core import core_schema
+import torch
 
 from .lexeme import Lexeme
 from .embedding import Embedding
@@ -8,11 +9,9 @@ import numpy as np
 
 class NoEmbeddingPhrase(Lexeme):
     def __init__(self, id: str, content: str):
-        super().__init__(id=id, content=content, embedding=None)
+        #initialised with empty embedding
+        super().__init__(id=id, content=content, embedding=Embedding(data=torch.tensor([])), original_content=content)
 
-    @property
-    def embedding(self):
-        return None
 
 class Phrase(Lexeme):
 
