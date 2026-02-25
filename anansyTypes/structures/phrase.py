@@ -7,10 +7,12 @@ import numpy as np
 
 
 class NoEmbeddingPhrase(Lexeme):
-    @classmethod
-    def from_dict(cls, data: dict) -> "NoEmbeddingPhrase":
-        return cls(id=data["id"], content=data["content"],embedding=None)
+    def __init__(self, id: str, content: str):
+        super().__init__(id=id, content=content, embedding=None)
 
+    @property
+    def embedding(self):
+        return None
 
 class Phrase(Lexeme):
 
