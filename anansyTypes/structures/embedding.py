@@ -3,7 +3,7 @@ import torch
 from pydantic import BaseModel
 from pydantic_core import core_schema
 from typing_extensions import Annotated
-
+import numpy as np
 
 class TensorPydantic:
     @classmethod
@@ -29,3 +29,4 @@ Tensor = Annotated[torch.Tensor, TensorPydantic]
 
 class Embedding(BaseModel):
     data: Tensor
+    
