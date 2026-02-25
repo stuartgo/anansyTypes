@@ -1,4 +1,5 @@
 from typing import List, Any
+from pydantic import model_validator
 from pydantic_core import core_schema
 import torch
 
@@ -19,6 +20,12 @@ class NoEmbeddingPhrase(Lexeme):
             content=data["content"],
             original_content=data["original_content"],
         )
+    @model_validator(mode="before")
+    @classmethod
+    def ignore_embedding(cls, values):
+        # Remove embedding from incoming data
+        values.pop("embedding", None)
+        return values
 
 class Phrase(Lexeme):
 
