@@ -8,7 +8,6 @@ from pydantic_core import core_schema
 import base64
 
 
-@dataclass
 class Symbol(BaseModel):
     id: int
     label: str
