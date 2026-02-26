@@ -12,3 +12,11 @@ class Symbol(BaseModel):
     id: int
     label: str
     image: str  # Base64-encoded PNG image data
+
+
+    def from_dict(cls, data: dict) -> "Symbol":
+        return cls(
+            id=data["id"],
+            label=data["label"],
+            image=data["image"],
+        )
