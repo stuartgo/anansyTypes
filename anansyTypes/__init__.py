@@ -26,6 +26,8 @@ __all__ = [
     "PreprocessorType",
     "SymbolProvider",
     "Language",
+    "Currency",
+    "SubscriptionType"
 ]
 
 
