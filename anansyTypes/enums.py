@@ -52,3 +52,7 @@ class Currency(Enum):
     EUR = "EUR"
     USD = "USD"
     NOK = "NOK"
+    
+class DiscountType(Enum):
+    PERCENTAGE = "percentage"
+    ABSOLUTE = "absolute"
