@@ -27,6 +27,7 @@ __all__ = [
     "PreprocessorType",
     "SymbolProvider",
     "Language",
+    "DiscountType",
 ]
 
 
