@@ -2,7 +2,7 @@ from .embedding import Embedding
 from .lexeme import Lexeme
 from .word import Word
 from .symbol import Symbol
-from .phrase import Phrase,NoEmbeddingPhrase
+from .phrase import Phrase
 
 
 __all__ = [
@@ -11,5 +11,4 @@ __all__ = [
     "Word",
     "Symbol",
     "Phrase",
-    "NoEmbeddingPhrase",
 ]

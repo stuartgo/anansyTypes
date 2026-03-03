@@ -1,71 +1,26 @@
 from abc import ABC, abstractmethod
 from typing import List, Union, Any
 from dataclasses import dataclass
+
+from pydantic import BaseModel
 from .embedding import Embedding
 
-
-@dataclass
-class Lexeme(ABC):
+class Lexeme(BaseModel,ABC):
     id: int
-
-    @property
-    @abstractmethod
-    def content(self) -> Union[str, List[str]]:
-        """Text content of the lexeme."""
-        pass
+    content: Union[str, List[str]]
+    original_content: Union[str, List[str]]
+    embedding: Embedding
     
-    @property
-    @abstractmethod
-    def original_content(self) -> Union[str, List[str]]:
-        """Original text content of the lexeme."""
-        pass
-
-    @property
-    @abstractmethod
-    def embedding(self) -> Embedding:
-        """Embedding(s) associated with the lexeme."""
-        pass
 
     @classmethod
-    @abstractmethod
     def from_dict(cls, data: dict) -> "Lexeme":
-        """Create instance from dictionary."""
-        pass
-
-    @classmethod
-    def __get_pydantic_core_schema__(cls, source_type: Any, handler):
-        from pydantic_core import core_schema
-
-        def validate_lexeme(value):
-            if isinstance(value, cls):
-                return value
-            if isinstance(value, dict):
-                return cls.from_dict(value)
-            raise ValueError(f"Cannot convert {type(value)} to {cls.__name__}")
-
-        python_schema = core_schema.with_info_plain_validator_function(
-            lambda value, _: validate_lexeme(value),
-            serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda x: {
-                    "id": x.id,
-                    "content": x.content,
-                    "original_content": x.original_content,
-                    "embedding": {"data": x.embedding.data.tolist()},
-                },
-                when_used="json",
-            ),
-        )
-
-        return core_schema.json_or_python_schema(
-            json_schema=core_schema.typed_dict_schema(
-                {
-                    "id": core_schema.typed_dict_field(core_schema.int_schema()),
-                    "original_content": core_schema.typed_dict_field(core_schema.str_schema()),
-                    "content": core_schema.typed_dict_field(core_schema.str_schema()),
-                    "embedding": core_schema.typed_dict_field(
-                        handler.generate_schema(Embedding)
-                    ),
-                }
-            ),
-            python_schema=python_schema,
-        )
+        return cls(
+            id=data["id"],
+            content=data["content"],
+            embedding=Embedding.from_dict(data["embedding"]),
+            original_content=data["original_content"],
+        ) 
+    def __new__(cls, *args, **kwargs):
+        if cls is Lexeme:
+            raise TypeError("Lexeme cannot be instantiated, use a subclass instead")
+        return super().__new__(cls)

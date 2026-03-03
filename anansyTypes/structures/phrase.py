@@ -1,70 +1,20 @@
 from typing import List, Any
+from pydantic import model_validator
 from pydantic_core import core_schema
+import torch
 
 from .lexeme import Lexeme
 from .embedding import Embedding
 import numpy as np
 
 
-class NoEmbeddingPhrase(Lexeme):
-    def __init__(self, id: int, content: str):
-        self.id = id
-        self._content = content
-        self._original_content = content
-        self._embedding = np.array([])  # Placeholder to avoid attribute errors
-
-    @property
-    def content(self) -> str:
-        return self._content
-    
-    @property
-    def original_content(self) -> str:
-        #temporarily return content as original_content
-        return self._content
-
-    @property
-    def embedding(self) -> Embedding:
-        return self._embedding
-
-    @classmethod
-    def from_dict(cls, data: dict) -> "NoEmbeddingPhrase":
-        return cls(id=data["id"], content=data["content"])
-
-
 class Phrase(Lexeme):
-    def __init__(self, id: int, content: str, embedding: Embedding):
-        self.id = id
-        self._content = content
-        self._original_content = content
-        self._embedding = embedding
-
-    @property
-    def content(self) -> str:
-        return self._content
-    
-    @property
-    def original_content(self) -> str:
-        #temporarily return content as original_content
-        return self._content
-
-    @property
-    def embedding(self) -> Embedding:
-        return self._embedding
 
     @classmethod
     def from_dict(cls, data: dict) -> "Phrase":
         return cls(
             id=data["id"],
             content=data["content"],
+            original_content=data["original_content"],
             embedding=Embedding.from_dict(data["embedding"]),
-        )
-
-    @classmethod
-    def from_noembeddingphrase(
-        cls, phrase: NoEmbeddingPhrase, embedding: Embedding
-    ) -> "Phrase":
-        return cls(
-            id=phrase.id,
-            content=phrase.content,
-            embedding=embedding,
         )
