@@ -46,7 +46,8 @@ class ResourceType(Enum):
 
 class SubscriptionType(Enum):
     FREE = "free"
-    PAID = "paid"
+    PAID_MONTH = "paid_month"
+    PAID_YEAR = "paid_year"
     
 class Currency(Enum):
     EUR = "EUR"
