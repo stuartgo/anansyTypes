@@ -35,9 +35,9 @@ class SymbolProvider(Enum):
 
 
 class Language(Enum):
-    NORWEGIAN = "norwegian"
-    ENGLISH = "english"
-    DEFAULT = "norwegian"
+    NORWEGIAN = "no"
+    ENGLISH = "en"
+    DEFAULT = "en"
 
 
 class ResourceType(Enum):
