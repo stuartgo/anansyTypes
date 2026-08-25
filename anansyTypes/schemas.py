@@ -78,8 +78,13 @@ class TextToSymbolRequest(ModifiedBaseModel):
 class TextToSymbolResponse(ModifiedBaseModel):
     symbols: List[Symbol]
 
-
-
-
-
-
+class UsageStatusResponse(ModifiedBaseModel):
+    """Read-only snapshot of a caller's rate-limit window."""
+    limit: int
+    used: int
+    remaining: int
+    unlimited: bool
+    window_seconds: int
+    # Seconds until the oldest recorded call falls out of the window, i.e. until
+    # one use is handed back. None when the caller has no recorded calls.
+    reset_in_seconds: Optional[int] = None
