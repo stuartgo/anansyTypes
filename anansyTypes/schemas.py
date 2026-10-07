@@ -1,7 +1,7 @@
 from pydantic import BaseModel as PydanticBaseModel
 from typing import List, Any, Dict, Optional,Union
 
-
+from enums import Language
 from .structures import Embedding,Word, Symbol,Phrase
 from pydantic import field_validator, ConfigDict
 from pydantic_tensor import Tensor
@@ -36,6 +36,9 @@ class PreprocessResponse(ModifiedBaseModel):
 class GetSymbolRequest(ModifiedBaseModel):
     lexeme_id: int
 
+class GetSymbolsResponse(ModifiedBaseModel):
+    symbols: List[Symbol]
+
 class GetSymbolResponse(ModifiedBaseModel):
     symbol: Optional[Symbol]
 
@@ -58,6 +61,19 @@ class GetFullPhrasesRequest(ModifiedBaseModel):
 class GetFullPhrasesResponse(ModifiedBaseModel):
     phrases: Optional[List[Phrase]]
 
+class GetSimilarSymbolsRequest(ModifiedBaseModel):
+    limit: int = 3
+    symbol: Symbol
+    word: str
+    sentence:str
+    
+
+class SearchSymbolsRequest(ModifiedBaseModel):
+    query: str
+    limit: int = 8
+
+
+
 class GetTranscriptionRequest(ModifiedBaseModel):
     audio_data: str
 
@@ -78,6 +94,13 @@ class TextToSymbolRequest(ModifiedBaseModel):
 class TextToSymbolResponse(ModifiedBaseModel):
     symbols: List[Symbol]
 
+class ReplaceFinishedRequest(ModifiedBaseModel):
+    """A correction: the sentence as heard, and the labels before and after."""
+    sentence: str
+    original: Symbol
+    replacement: Symbol
+    language: Language
+    
 class UsageStatusResponse(ModifiedBaseModel):
     """Read-only snapshot of a caller's rate-limit window."""
     limit: int

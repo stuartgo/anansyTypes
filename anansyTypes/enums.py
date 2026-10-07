@@ -28,6 +28,13 @@ class ResponseModelName(ModelName):
 class PreprocessorType(Enum):
     NORWEGIAN = "norwegian"
     DEFAULT = "norwegian"
+    NORWEGIAN_WORDLIST="norwegian_wordlist"
+    ENGLISH="english"
+
+
+class SymbolTranslatorType(Enum):
+    EMBEDDING = "embedding"
+    JEV = "jev"
 
 
 class SymbolProvider(Enum):
