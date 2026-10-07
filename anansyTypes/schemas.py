@@ -1,7 +1,6 @@
 from pydantic import BaseModel as PydanticBaseModel
 from typing import List, Any, Dict, Optional,Union
 
-from enums import Language
 from .structures import Embedding,Word, Symbol,Phrase
 from pydantic import field_validator, ConfigDict
 from pydantic_tensor import Tensor
@@ -99,7 +98,7 @@ class ReplaceFinishedRequest(ModifiedBaseModel):
     sentence: str
     original: Symbol
     replacement: Symbol
-    language: Language
+    language: str
     
 class UsageStatusResponse(ModifiedBaseModel):
     """Read-only snapshot of a caller's rate-limit window."""
